@@ -76,4 +76,13 @@ public class AuthServiceImpl implements AuthService {
         return userDtos;
     }
 
+    @Override
+    public User getById(int id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        }
+        return null;
+    }
+
 }

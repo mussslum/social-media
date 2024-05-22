@@ -14,4 +14,5 @@ public interface AuthService {
 
     public User getCurrentUser();
     public List<UserDto> getAllUserr();
+    public User getById(int id);
 }

@@ -34,5 +34,13 @@ public class User {
     @OneToMany(mappedBy ="user" )
     private List<Comment> comments;
 
+    @ManyToMany
+    @JoinTable(name = "user_followers",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<User> followers;
+
+    private Boolean isPrivate=true;
+
 
 }

@@ -2,7 +2,12 @@ package com.example.socialmedia.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class TweetDto {
-    public String content;
+
+    private int id;
+    private String content;
+    private List<CommentResponse> commentResponses;
 }

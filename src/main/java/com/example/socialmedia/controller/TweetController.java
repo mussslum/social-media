@@ -1,10 +1,15 @@
 package com.example.socialmedia.controller;
 
 import com.example.socialmedia.dto.TweetDto;
+import com.example.socialmedia.dto.TweetResponse;
 import com.example.socialmedia.model.Tweet;
+import com.example.socialmedia.model.User;
 import com.example.socialmedia.repository.TweetRepository;
+import com.example.socialmedia.repository.UserRepository;
 import com.example.socialmedia.service.TweetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +29,9 @@ public class TweetController {
         return tweetService.getCurrentUserTweets();
     }
     @GetMapping("/get/{id}")
-    public List<TweetDto> getTweetsByUserId(@PathVariable int id){
+    public ResponseEntity<TweetResponse> getTweetsByUserId(@PathVariable int id){
         return tweetService.getTweetsByUserId(id);
     }
+    //
 
 }
