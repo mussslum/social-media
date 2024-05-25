@@ -21,8 +21,12 @@ public class FollowController {
     private final FollowService followService;
     private final CommentRepository commentRepository;
 
-    @PostMapping("/{id}")
+    @PostMapping("/add/{id}")
     public ResponseEntity<String> follow(@PathVariable int id){
         return followService.follow(id);
+    }
+    @PostMapping("/remove/{id}")
+    public ResponseEntity<String> unfollow(@PathVariable int id){
+        return followService.unfollow(id);
     }
 }

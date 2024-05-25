@@ -9,5 +9,5 @@ public class TweetDto {
 
     private int id;
     private String content;
-    private List<CommentResponse> commentResponses;
+    private List<CommentDto> commentDtos;
 }

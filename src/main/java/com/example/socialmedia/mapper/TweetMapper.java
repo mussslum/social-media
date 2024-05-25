@@ -11,6 +11,6 @@ import java.util.List;
 public interface TweetMapper {
     Tweet tweetDtoToTweet (TweetDto tweetDto);
     List<TweetDto> tweetsToTweetDtoList(List<Tweet> tweets);
-    @Mapping(target = "commentResponses" ,source = "comments")
+    @Mapping(target = "commentDtos" ,source = "comments")
     public TweetDto tweetToTweetDto(Tweet tweet);
 }

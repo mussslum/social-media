@@ -24,8 +24,6 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public ResponseEntity<String> follow(int id) {
         User user = authService.getById(id);
-        List<User> userList= new ArrayList<>();
-        userList.add(user);
         if(user==null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
@@ -33,8 +31,23 @@ public class FollowServiceImpl implements FollowService {
         if (currentUser.getFollowers().contains(user)){
             return new ResponseEntity<>("You already follow the given User",HttpStatus.FOUND);
         }
-        currentUser.setFollowers(userList);
+        currentUser.getFollowers().add(user);
         userRepository.save(currentUser);
         return new ResponseEntity<>("OK",HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> unfollow(int id) {
+        User user = authService.getById(id);
+        if(user==null){
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        User currentUser = authService.getCurrentUser();
+        if (!currentUser.getFollowers().contains(user)){
+            return new ResponseEntity<>("You don't follow the given user",HttpStatus.EXPECTATION_FAILED);
+        }
+        currentUser.getFollowers().remove(user);
+        userRepository.save(currentUser);
+        return new ResponseEntity<>("You don't follow the given user anymore",HttpStatus.OK);
     }
 }
