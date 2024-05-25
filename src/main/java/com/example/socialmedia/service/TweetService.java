@@ -13,4 +13,7 @@ public interface TweetService {
      public ResponseEntity<TweetResponse> getTweetsByUserId(int id);
      public TweetDto getTweetDtoById(int id);
      public Tweet getTweetById(int id);
+     public ResponseEntity<String> like(int id);
+     public ResponseEntity<Integer> likes(int id);
+
 }

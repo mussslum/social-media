@@ -1,7 +1,9 @@
-package com.example.socialmedia.service;
+package com.example.socialmedia.service.impl;
 
 import com.example.socialmedia.model.User;
 import com.example.socialmedia.repository.UserRepository;
+import com.example.socialmedia.service.AuthService;
+import com.example.socialmedia.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FollowServiceImpl implements FollowService{
+public class FollowServiceImpl implements FollowService {
 
     private final AuthService authService;
     private final UserRepository userRepository;

@@ -8,19 +8,15 @@ import com.example.socialmedia.model.Tweet;
 import com.example.socialmedia.model.User;
 import com.example.socialmedia.repository.TweetRepository;
 import com.example.socialmedia.service.AuthService;
+import com.example.socialmedia.service.CommonService;
 import com.example.socialmedia.service.TweetService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +26,7 @@ public class TweetServiceImpl implements TweetService {
     private final TweetMapper tweetMapper;
     private final AuthService authService;
     private final CommentMapper commentMapper;
+    private final CommonService commonService;
     @Override
     public String save(TweetDto tweetDto) {
         Tweet tweet=tweetMapper.tweetDtoToTweet(tweetDto);
@@ -56,7 +53,7 @@ public class TweetServiceImpl implements TweetService {
         List<Tweet> tweets = tweetRepository.findByUserId(id);
         tweetResponse.setTweetDtos(tweetMapper.tweetsToTweetDtoList(tweets));
         tweetResponse.setUsername(user.getUsername());
-        if(user.getIsPrivate() && !currentUser.getFollowers().contains(user)){
+        if(!commonService.canAccessProfile(id)){
             return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(tweetResponse,HttpStatus.OK);
@@ -84,6 +81,40 @@ public class TweetServiceImpl implements TweetService {
         else{
             return null;
         }
+    }
+
+    @Override
+    public ResponseEntity<String> like(int id) {
+        int count=0;
+        User currentUser = authService.getCurrentUser();
+        Optional<Tweet> tweet = tweetRepository.findById(id);
+        if(!tweet.isPresent()){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        User targetUser=authService.getById(tweet.get().getUser().getId());
+        if(!commonService.canAccessProfile(targetUser.getId())){
+            return new ResponseEntity<>("This is private account",HttpStatus.FORBIDDEN);
+        }
+        if (tweet.get().getUsersWhoLikeTweet().contains(currentUser)){
+            return new ResponseEntity<>("You have already liked the tweet ",HttpStatus.OK);
+        }
+        tweet.get().getUsersWhoLikeTweet().add(currentUser);
+        tweetRepository.save(tweet.get());
+        return new ResponseEntity<>("You liked the tweet",HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Integer> likes(int id) {
+        int count=0;
+        Optional<Tweet> tweet=tweetRepository.findById(id);
+        if (!tweet.isPresent()){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        if(!commonService.canAccessProfile(tweet.get().getUser().getId())){
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+        }
+        count=tweet.get().getUsersWhoLikeTweet().size();
+        return new ResponseEntity<>(count,HttpStatus.OK);
     }
 
 

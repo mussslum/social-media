@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String register(UserDto userDto) {
-        Role role =roleRepository.findByName(RoleName.USER.toString());
+        Role role =roleRepository.findByName(RoleName.ADMIN.toString());
         List<Role> roles= new ArrayList<>();
         roles.add(role);
         User findUser = userRepository.findByUsername(userDto.getUsername());
