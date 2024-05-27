@@ -2,6 +2,7 @@ package com.example.socialmedia.controller;
 
 import com.example.socialmedia.model.Comment;
 import com.example.socialmedia.repository.CommentRepository;
+import com.example.socialmedia.service.FollowRequestService;
 import com.example.socialmedia.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -19,7 +20,7 @@ import java.util.List;
 public class FollowController {
 
     private final FollowService followService;
-    private final CommentRepository commentRepository;
+    private final FollowRequestService followRequestService;
 
     @PostMapping("/add/{id}")
     public ResponseEntity<String> follow(@PathVariable int id){
@@ -28,5 +29,9 @@ public class FollowController {
     @PostMapping("/remove/{id}")
     public ResponseEntity<String> unfollow(@PathVariable int id){
         return followService.unfollow(id);
+    }
+    @PostMapping("/accept/{id}")
+    public ResponseEntity<String> accept(@PathVariable int id){
+        return followRequestService.accept(id);
     }
 }

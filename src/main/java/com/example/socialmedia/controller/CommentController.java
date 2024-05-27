@@ -24,4 +24,8 @@ public class CommentController {
     public ResponseEntity<CommentResponse> getCommentsByTweet (@PathVariable int id){
         return commentService.getCommentsByTweetId(id);
     }
+    @PostMapping("delete/{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable int id){
+        return commentService.delete(id);
+    }
 }

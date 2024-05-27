@@ -19,6 +19,9 @@ public class CommonServiceImpl implements CommonService {
         if(targetUser==null){
             return false;
         }
+        if(currentUser==targetUser){
+            return true;
+        }
         if(targetUser.getIsPrivate() && !currentUser.getFollowers().contains(targetUser)){
             return false;
         }

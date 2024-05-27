@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -69,5 +70,19 @@ public class CommentServiceImpl implements CommentService {
         commentResponse.setCommentDtos(commentDtos);
         commentResponse.setTweetContent(tweetContent);
         return new ResponseEntity<>(commentResponse,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> delete(int id) {
+        Optional<Comment> comment = commentRepository.findById(id);
+        List<Comment> allComentsOfCurrentUser = authService.getCurrentUser().getComments();
+        if(!comment.isPresent()){
+            return new ResponseEntity<>("Doesn't exist comment with given id",HttpStatus.NOT_FOUND);
+        }
+        if(!allComentsOfCurrentUser.contains(comment.get())){
+            return new ResponseEntity<>("This comment is not your comment, you can only delete your comments",HttpStatus.FORBIDDEN);
+        }
+        commentRepository.delete(comment.get());
+        return new ResponseEntity<>("Successfully deleted",HttpStatus.OK);
     }
 }

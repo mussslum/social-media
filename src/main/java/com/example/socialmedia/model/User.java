@@ -40,6 +40,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private List<User> followers;
 
+    @OneToMany(mappedBy = "sourceUser")
+    private List<FollowRequest> followRequests;
+
     private Boolean isPrivate=true;
 
 

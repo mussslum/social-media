@@ -10,4 +10,5 @@ import java.util.List;
 public interface CommentService {
     public String save(int id , SaveCommentDto saveCommentDto);
     public ResponseEntity<CommentResponse> getCommentsByTweetId(int id);
+    public ResponseEntity<String> delete(int id);
 }
