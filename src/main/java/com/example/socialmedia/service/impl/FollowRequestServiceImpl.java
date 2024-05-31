@@ -23,7 +23,7 @@ public class FollowRequestServiceImpl implements FollowRequestService {
     @Override
     public FollowRequest getById(int id) {
         Optional<FollowRequest> followRequest=followRequestRepository.findById(id);
-        if(followRequest==null){
+        if(!followRequest.isPresent()){
             return null;
         }
         return followRequest.get();
