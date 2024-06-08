@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class TweetServiceImpl implements TweetService {
     private final AuthService authService;
     private final CommentMapper commentMapper;
     private final CommonService commonService;
+    private final EmailSenderService emailSenderService;
     @Override
     public String save(TweetDto tweetDto) {
         Tweet tweet=tweetMapper.tweetDtoToTweet(tweetDto);
@@ -50,7 +53,7 @@ public class TweetServiceImpl implements TweetService {
         if(user==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        List<Tweet> tweets = tweetRepository.findByUserId(id);
+        List<Tweet> tweets = tweetRepository.findFilteredTweetsByUserId(id);
         tweetResponse.setTweetDtos(tweetMapper.tweetsToTweetDtoList(tweets));
         tweetResponse.setUsername(user.getUsername());
         if(!commonService.canAccessProfile(id)){

@@ -45,5 +45,7 @@ public class User {
 
     private Boolean isPrivate=true;
 
+    private String email;
+
 
 }

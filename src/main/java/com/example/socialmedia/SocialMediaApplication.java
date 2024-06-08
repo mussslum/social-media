@@ -10,7 +10,7 @@ public class SocialMediaApplication {
 
 	public static void main(String[] args) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String password= passwordEncoder.encode("mus123");
+		String password= passwordEncoder.encode("aqs123");
 		System.out.println(password);
 		SpringApplication.run(SocialMediaApplication.class, args);
 	}

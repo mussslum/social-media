@@ -1,6 +1,7 @@
 package com.example.socialmedia.mapper;
 
 import com.example.socialmedia.dto.UserDto;
+import com.example.socialmedia.model.CacheUser;
 import com.example.socialmedia.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface UserMapper {
     User userDtoToUser (UserDto userDto);
     List<UserDto> usersToUserDtoList (List<User> users);
+    CacheUser userDtoToCacheUser (UserDto userDto);
+    User cacheUserToUser(CacheUser cacheUser);
 }

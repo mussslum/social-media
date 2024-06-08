@@ -26,6 +26,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests( auth ->{
                     auth.requestMatchers("/auth/register").permitAll();
+                    auth.requestMatchers("/auth/verify").permitAll();
                     auth.anyRequest().authenticated();
                 });
         return http.httpBasic(withDefaults()).build();
