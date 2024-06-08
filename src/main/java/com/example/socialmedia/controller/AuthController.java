@@ -1,5 +1,7 @@
 package com.example.socialmedia.controller;
 
+import com.example.socialmedia.dto.RegisterRequest;
+import com.example.socialmedia.dto.RegisterResponse;
 import com.example.socialmedia.dto.UserDto;
 import com.example.socialmedia.model.Tweet;
 import com.example.socialmedia.model.User;
@@ -27,4 +29,9 @@ public class AuthController {
     public String register (@RequestBody UserDto userDto){
         return authService.register(userDto);
     }
+    @PostMapping("/verify")
+    public RegisterResponse verify(@RequestBody RegisterRequest request){
+        return authService.verifyAccount(request);
+    }
+
 }

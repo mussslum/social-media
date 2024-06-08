@@ -27,4 +27,6 @@ public class Tweet {
             inverseJoinColumns = @JoinColumn(name = "tweet_id"))
     private List<User> usersWhoLikeTweet;
 
+    private Boolean isHidden=false;
+
 }

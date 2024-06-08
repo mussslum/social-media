@@ -1,14 +1,17 @@
-package com.example.socialmedia.dto;
+package com.example.socialmedia.model;
 
-import com.example.socialmedia.model.Role;
-import com.example.socialmedia.model.User;
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
 
 import java.util.List;
 
 @Data
-public class UserDto {
+@Entity
+@Table(name = "cacheUser")
+public class CacheUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String surname;
     private String username;
@@ -16,5 +19,4 @@ public class UserDto {
     private String confirmPassword;
     private String email;
     private String verifyCode;
-
 }

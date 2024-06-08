@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.0.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
+	testImplementation 'ch.qos.logback:logback-classic:1.4.14'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
