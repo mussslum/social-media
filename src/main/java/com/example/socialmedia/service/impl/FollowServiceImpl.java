@@ -34,6 +34,9 @@ public class FollowServiceImpl implements FollowService {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         User currentUser = authService.getCurrentUser();
+        if(currentUser==user){
+            return new ResponseEntity<>("You cannot follow yourself , it is absurd",HttpStatus.BAD_REQUEST);
+        }
         if(user.getFollowers().contains(currentUser)){
             return new ResponseEntity<>("You already follow the given User",HttpStatus.FOUND);
         }
